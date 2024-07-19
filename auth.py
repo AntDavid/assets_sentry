@@ -5,23 +5,26 @@ def check_password():
     def password_entered():
         username = st.session_state["username"]
         password = st.session_state["password"]
+        
+        if not username or not password:
+            st.error("Please enter your username and password")
+            return
 
-        conn = create_connection("data.db")
+        conn = create_connection("database.db")
         user = verify_user(conn, username, password)
 
         if user:
             st.session_state["authenticated"] = True
             del st.session_state["password"]
-        
         else:
             st.session_state["authenticated"] = False
             st.error("Invalid username or password")
 
+    if "authenticated" in st.session_state and st.session_state["authenticated"]:
+        return True
 
-        if st.session_state["authenticated"]:
-            return True
-        
-        else:
-            st.text_input("Username", on_change=password_entered, key="username")
-            st.text_input("Password", on_change=password_entered, key="password", type="password")
-            return False
+    if "username" in st.session_state and "password" in st.session_state:
+        password_entered()
+        return st.session_state["authenticated"]
+
+    return False
