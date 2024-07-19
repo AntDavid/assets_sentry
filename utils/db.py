@@ -14,7 +14,7 @@ def create_connection(db_file):
 
 def creat_table(conn):
     create_users_table = """
-    CREATE IF NO EXISTS users (
+    CREATE TABLE IF NOT EXISTS users (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL,
         email TEXT NOT NULL UNIQUE,
@@ -47,7 +47,7 @@ def add_user(conn, name, email, username, password):
     return cursor.lastrowid
 
 def verify_user(conn, username, password):
-    sql = '''SELECT * FROM users WHERE username =? and password =?'''
+    sql = '''SELECT * FROM users WHERE username = ? AND password = ?'''
     cursor = conn.cursor()
     cursor.execute(sql, (username, password))
     user = cursor.fetchone()
