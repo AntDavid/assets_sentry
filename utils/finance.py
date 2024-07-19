@@ -12,7 +12,7 @@ def download_stock_data(stock, start_date, end_date):
     return dataframe
 
 def calculate_metrics(dataframe):
-    last_update = dataframe.index.mex()
+    last_update = dataframe.index.max()
     last_quote = dataframe.loc[dataframe.index.max(), 'Adj Close']
     first_quote = dataframe.loc[dataframe.index.min(), 'Adj Close']
     min_quote = dataframe['Adj Close'].min()
