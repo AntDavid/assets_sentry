@@ -1,7 +1,7 @@
 import streamlit as st
 from utils.db import create_connection, add_user
 
-def signuo():
+def signup():
     st.title("Sign Up")
 
     with st.form(key="signup_form"):
@@ -19,6 +19,9 @@ def signuo():
                     user_id = add_user(conn, name, username, email, password)
                     st.success("Account created successfully")
                     st.info("Please login to continue")
-                    
+
                 else:
-                    st.error("All fields are required")
+                    st.error("Passwords do not match")
+
+            else:
+                st.error("Please fill in all fields")
