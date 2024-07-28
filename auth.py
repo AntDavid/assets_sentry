@@ -15,6 +15,7 @@ def check_password():
 
         if user:
             st.session_state["authenticated"] = True
+            st.session_state["page"] = "analysis"
             del st.session_state["password"]
         else:
             st.session_state["authenticated"] = False
