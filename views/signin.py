@@ -7,21 +7,24 @@ def login(change_page):
 
     st.text_input("Username", key="username")
     st.text_input("Password", type="password", key="password")
+    
+    col_one, col_two = st.columns(2)
 
-    if st.button("Sign In"):
-        if check_password():
-            st.success("You are authenticated")
-            st.session_state["authenticated"] = True
-            change_page("authenticated")
+    with col_one:
+        if st.button("Sign In", use_container_width = True):
+            if check_password():
+                st.success("You are authenticated")
+                st.session_state["authenticated"] = True
+                change_page("authenticated")
+                st.rerun()
+
+            else:
+                st.warning("Invalid username or password")
+                st.experimental_rerun()
+  
+    with col_two:
+        if st.button("Sign Up", use_container_width = True):
+            change_page("Sign Up")
             st.rerun()
-
-        else:
-            st.warning("Invalid username or password")
-            st.experimental_rerun()
-  
-  
-    if st.button("Sign Up"):
-        change_page("Sign Up")
-        st.rerun()
-            
+                
 
